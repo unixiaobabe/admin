@@ -13,6 +13,7 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
+//开发环境端口
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
@@ -29,20 +30,31 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-  devServer: {
-    port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    before: require('./mock/mock-server.js')
+  devServer:{
+    //代理配置
+    proxy:{
+      //这里的api表示如果我们的请求地址有/api的时候，就触发代理机制
+      //localhost:8888/api/abc => 代理给另一个服务器
+      //本地的前端 => 本地的后端 => 代理我们向另一个服务器发请求（行得通）
+      //本地的前端 => 另外一个服务器发请求（跨域 行不通）
+      '/api':{
+        target:'http://ihrm-java.itheima.net/', //我们要代理的地址
+        changeOrigin:true, //是否跨域 需要设置此值为true才可以让本地服务器代理我们发出请求
+        //路径重写
+        // pathRewrite:{
+        //   //重新路由 localhost:8888/api/login => www.baidu.com/api/login
+        //   '^/api':'' //假设我们想把locallhost:8888/api/login变成www.baidu.com/login就需要这么做
+        // }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
+
+      //别名
       alias: {
         '@': resolve('src')
       }

@@ -1,15 +1,13 @@
-import Cookies from 'js-cookie'
+const Tokenkey = 'hrsass-token'
 
-const TokenKey = 'vue_admin_template_token'
-
-export function getToken() {
-  return Cookies.get(TokenKey)
+export function getToken(){
+  return localStorage.getItem(Tokenkey)
 }
 
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function setToken(token){
+  return localStorage.setItem(Tokenkey,token)
 }
 
-export function removeToken() {
-  return Cookies.remove(TokenKey)
+export function removeToken(){
+  return localStorage.removeItem(Tokenkey)
 }
