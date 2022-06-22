@@ -28,8 +28,8 @@
 <script>
 import COS from "cos-js-sdk-v5";
 const cos = new COS({
-  SecretId: "AKIDaz80dz3rQk6C1ZqqZ5LK3VhPr2waz81e",
-  SecretKey: "OWO180cz7yYtxlIZZ5LK2UgaDafU3LFt",
+  SecretId: "", //腾讯云SecretId
+  SecretKey: "", //腾讯云SecretKey
 });
 export default {
   data() {
