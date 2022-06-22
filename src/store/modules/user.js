@@ -1,5 +1,5 @@
 import { getUserInfo, login , getUserDetailById} from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken ,setTimestamp} from '@/utils/auth'
 
 const getDefaultState = () => {
   return {
@@ -32,6 +32,7 @@ const actions = {
   async login({ commit }, data) {
     const result = await login(data)
     commit('setToken', result) 
+    setTimestamp()
   },
   async getUserInfo({commit}){
     const res = await getUserInfo()
@@ -39,6 +40,10 @@ const actions = {
     const baseRes = {...res,...baseInfo}
     commit('setUserInfo',baseRes)
     return res
+  },
+  loginout({commit}){
+    commit('removeToken')
+    commit('removeUserInfo')
   }
 }
 

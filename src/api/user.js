@@ -22,10 +22,4 @@ export function getUserDetailById(id) {
     })
 }
 
-export function getInfo(token) {
 
-}
-
-export function logout() {
-
-}

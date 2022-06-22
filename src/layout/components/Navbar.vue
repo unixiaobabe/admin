@@ -15,6 +15,7 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img
+            v-imgerror="defaultImg"
             :src="staffPhoto"
             class="user-avatar"
             alt=""
@@ -42,11 +43,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,createNamespacedHelpers } from "vuex";
+const {mapActions} = createNamespacedHelpers('user')
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
 export default {
+  data() {
+    return {
+      defaultImg: require('@/assets/common/head.jpg')
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -55,12 +62,13 @@ export default {
     ...mapGetters(["sidebar", "name","staffPhoto"]),
   },
   methods: {
+    ...mapActions(['loginout']),
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    logout() {
+      this.loginout()
+      this.$router.push('/login')  
     },
   },
 };

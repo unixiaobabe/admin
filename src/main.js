@@ -15,6 +15,23 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import * as directives from '@/directives'
+
+import PageTools from '@/components/PageTools'
+Vue.component('PageTools',PageTools)
+
+//注册全局过滤器
+import * as filters from '@/filters'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key,filters[key])
+})
+
+import Components from '@/components'
+Vue.use(Components)
+
+import Print from 'vue-print-nb'
+Vue.use(Print)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -34,6 +51,11 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+//全局注册自定义指令
+Object.keys(directives).forEach(key => {
+  Vue.directive(key,directives[key])
+})
 
 new Vue({
   el: '#app',
